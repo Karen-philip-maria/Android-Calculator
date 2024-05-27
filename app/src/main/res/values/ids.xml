@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="etNum1" type="id" />
+    <item name="etNum2" type="id" />
+    <item name="btn_division" type="id" />
+</resources>
