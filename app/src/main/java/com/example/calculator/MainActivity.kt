@@ -1,14 +1,11 @@
 package com.example.calculator
 
-import android.media.tv.TvView
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import kotlin.math.sign
 
 class MainActivity : AppCompatActivity() {
     lateinit var etNum1: EditText
@@ -17,38 +14,26 @@ class MainActivity : AppCompatActivity() {
     lateinit var btn_subtract: Button
     lateinit var btn_divide: Button
     lateinit var btn_multiplication: Button
-    lateinit var tvView: TextView
+    lateinit var tvResult:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         castViews()
         btn_add.setOnClickListener {
-            val num1 = etNum1.text.toString().toInt()
-            val num2 = etNum2.text.toString().toInt()
-            val sum = num1 + num2
-            tvView.text = sum.toString()
+          validate("+")
         }
         btn_subtract.setOnClickListener {
-            val num1 = etNum1.text.toString().toInt()
-            val num2 = etNum2.text.toString().toInt()
-            val sum = num1 - num2
-            tvView.text = sum.toString()
+            validate("-")
         }
 
         btn_multiplication.setOnClickListener {
-            val num1 = etNum1.text.toString().toInt()
-            val num2 = etNum2.text.toString().toInt()
-            val sum = num1 * num2
-            tvView.text = sum.toString()
+            validate("*")
         }
 
 
         btn_divide.setOnClickListener {
-            val num1 = etNum1.text.toString().toInt()
-            val num2 = etNum2.text.toString().toInt()
-            val sum = num1 / num2
-            tvView.text = sum.toString()
+            validate("/")
         }
     }
 
@@ -59,8 +44,40 @@ class MainActivity : AppCompatActivity() {
             btn_subtract = findViewById(R.id.btn_subtract)
             btn_multiplication = findViewById(R.id.btn_multiplication)
             btn_divide = findViewById(R.id.btn_division)
-            tvView = findViewById(R.id.textView)
+            tvResult= findViewById(R.id. textView)
 
 
+    }
+
+    fun validate(sign: String) {
+        val num1 = etNum1.text.toString()
+        val num2 = etNum1.text.toString()
+        var inputError = false
+        if (num1.isBlank()) {
+            inputError = true
+            etNum1.error = "Num 1 is required"
+        }
+        if (num2.isBlank()) {
+            inputError = true
+            etNum1.error = "Num 2 is required"
+        }
+        if(!inputError){
+            calculate(num1.toDouble(), num2.toDouble(), sign)
+        }
+    }
+
+    fun calculate(num1: Double ,num2:Double, sign:String){
+//        val num1 = etNum1.text.toString().toInt()
+//        val num2 = etNum2.text.toString().toInt()
+        var result= 0.0
+
+        when (sign){
+            "+" -> result =  num1 + num2
+            "-" -> result =  num1 - num2
+            "*" -> result =  num1 * num2
+            "/" -> result =  num1 / num2
+
+        }
+        tvResult.text= result.toString()
     }
 }
